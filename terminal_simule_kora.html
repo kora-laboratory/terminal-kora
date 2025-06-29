@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Terminal KORA</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #33ff33;
+      font-family: monospace;
+      padding: 2em;
+    }
+    #terminal {
+      max-width: 800px;
+      margin: auto;
+      background-color: #111;
+      padding: 1em;
+      border: 1px solid #33ff33;
+      min-height: 400px;
+      white-space: pre-wrap;
+      overflow-y: auto;
+    }
+    #inputLine {
+      display: flex;
+    }
+    #inputLine span {
+      margin-right: 0.5em;
+    }
+    #commandInput {
+      flex: 1;
+      background: none;
+      border: none;
+      color: #33ff33;
+      font-family: monospace;
+      font-size: 1em;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="terminal">
+    &gt;&gt; Accès sécurisé au système KORA v3.8
+    <br>&gt;&gt; Entrez une commande.
+  </div>
+  <div id="inputLine">
+    <span>&gt;</span>
+    <input type="text" id="commandInput" autofocus />
+  </div>
+
+  <script>
+    const terminal = document.getElementById('terminal');
+    const input = document.getElementById('commandInput');
+
+    const responses = {
+      'patient_soledad': '>> Accès dossier SOLEDAD...\n>> Symptômes : instabilité mentale, hallucinations, grattage du front récurrent.\n>> Observation : activation du Troisième Œil partielle. Risque : élevé.',
+      'journal_marie': '>> JOURNAL DE MARIE (extrait) :\n"Papa dit que je suis spéciale. Quand je ferme les yeux, je vois autre chose... Je crois qu\'ils me regardent aussi."\n>> Entrée cryptée. Niveau DELTA requis.',
+      'code_omega': '>> Code d\'accès OMEGA : ******** (censuré)\n>> Astuce : cherchez dans le journal de Pierre.',
+      'lacticides_info': '>> Lacticides : entités dérivées du porteur original.\n>> Statut : hostiles.\n>> Observation : clones partiels ou complets. Persistants tant que le porteur vit.',
+      'clear': 'clear'
+    };
+
+    input.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        const command = input.value.trim();
+        input.value = '';
+
+        terminal.innerHTML += '\n> ' + command;
+
+        const response = responses[command.toLowerCase()] || '>> Commande inconnue.';
+
+        if (response === 'clear') {
+          terminal.innerHTML = '&gt;&gt; Terminal réinitialisé.';
+        } else {
+          terminal.innerHTML += '\n' + response;
+        }
+
+        terminal.scrollTop = terminal.scrollHeight;
+      }
+    });
+  </script>
+</body>
+</html>
